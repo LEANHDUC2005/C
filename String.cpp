@@ -1,0 +1,65 @@
+#include<stdio.h>
+//  CHUOI KY TU
+    // . Khai bao chuoi
+	char monhoc[] = " Tin hoc co so A ";
+	// 1. Xuat chuoi
+	
+	printf("%s",monhoc); // Khong xuong dong
+	// Tin hoc co so A_
+	puts(monhoc);        // Tu dong xuong dong
+	// Tin hoc co so A
+	
+    //  2. Nhap chuoi
+    //  a. Su dung scanf voi dac ta "%s"
+    //  Chi nhan cac ky tu tu ban phim den khi gap ky tu khong trang (space) hoac ky tu xuong dong (Enter)
+    char monhoc[50];
+    printf("Nhap mot chuoi: ");
+    scanf("%s", monhhoc);
+    printf("Chuoi nhan duoc la: %c",monhoc);
+    //   b. Su dung ham gets
+    //   Nhan cac ky tu tu ban phim den khi gap ky tu xuong dong
+    //   Output: Tat ca nhung gi nguoi dung nhan ( tru ky tu xuong dong )
+    char monhoc[50];
+    printf("Nhap mot chuoi: ");
+    gets(monhoc);
+    printf("Chuoi nhan duoc la: %s", monhoc);
+    
+    
+//==================================== Mot so ham theo tac tren chuoi =============================================|
+//|   Ham C   | Ten day du tieng Anh              |              Chuc nang chinh                                             |
+//| --------- | --------------------------------- | -------------------------------------------------------------- |
+//| `strcpy`  | String Copy                       | Sao chep chuoi nguon vao chuoi dich                            |
+//| `strdup`  | String Duplicate                  | Tao ban sao moi (cap phat dong) cua chuoi                      |
+//| `strlwr`  | String Lowercase                  | Chuyen tat ca ky tu trong chuoi sang chu thuong (khong chuan)  |
+//| `strupr`  | String Uppercase                  | Chuyen tat ca ky tu trong chuoi sang chu hoa (khong chuan)     |
+//| `strrev`  | String Reverse                    | Dao nguoc chuoi (khong chuan)                                  |
+//| `strcmp`  | String Compare                    | So sanh hai chuoi phan biet chu hoa thuong                     |
+//| `stricmp` | String Compare (case-insensitive) | So sanh hai chuoi khong phan biet chu hoa thuong (khong chuan) |
+//| `strcat`  | String Concatenate                | Noi chuoi nguon vao cuoi chuoi dich                            |
+//| `strlen`  | String Length                     | Tinh do dai cua chuoi (khong tinh ky tu '\0')                  |
+//| `strstr`  | String Search (Substring Search)  | Tim chuoi con trong chuoi lon hon                              |
+
+
+
+
+// 1. Ham sao chep chuoi
+// char *strcpy(char dest[],const char src[])
+// Sao chep chuoi src sang chuoi dest , dung khi ky tu ket thuc chuoi "\0" vua duoc phep.
+// !dest phai du lon de chua src
+// Output: Chuoi dest moi
+
+char s[100];
+s = "Tin hoc co so A";                 // Sai
+strcpy(s, "Tin hoc co so A");          // Dung
+//  2. Ham tao ban sao
+// char *strdup(const char s[])
+// Tao ban sao cua mot chuoi cho truoc
+// Output: Dia chi chuoi ket qua ( Thanh cong )
+//         NULL ( That bai )
+
+
+
+
+
+
+ 
