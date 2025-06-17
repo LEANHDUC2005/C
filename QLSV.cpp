@@ -16,19 +16,30 @@ typedef struct {
 
 // +------CAC HAM CHUC NANG-------+
 void nhapChuoi(char str[],int size);
+// Nhap , xuat
 void nhap(Sinhvien a[MAX], int n);
 void xuat(Sinhvien a[MAX], int n);
+// Tim kiem
 int TimKiemTheoMSSV(Sinhvien a[MAX], int n, char MSSVCanTim[]);
 int TimKiemTheoHoTen(Sinhvien a[MAX], int n, char TenCanTim[]);
 int TimKiemTheoSDT(Sinhvien a[MAX], int n, char SDTCanTim[]);
+void KetQuaTimKiem(Sinhvien a[MAX],int i);
+// Them
 void ThemSinhVien(Sinhvien a[MAX], int *n);
+// Xoa
 void XoaSinhVien(Sinhvien a[MAX], int *n, char MSSVCanXoa[]);
+// Sap Xep
 void SapXepDTBTangDan(Sinhvien a[MAX],int n);
 void SapXepDTBGiamDan(Sinhvien aMAX[],int n);
+void SapXepSDTTangDan(Sinhvien a[], int n);
+void SapXepHoTenTangDan(Sinhvien a[],int n);
+// Cap nhat
 void CapNhatSinhVien(Sinhvien a[MAX], int n, char MSSVCanCapNhat[]);
-void KetQuaTimKiem(Sinhvien a[MAX],int i);
+// Doc du lieu
 void DocFile(Sinhvien a[MAX]);
+// Ghi du lieu
 void GhiFile(Sinhvien a[MAX], int n);
+
 
 
 // +-----DINH NGHIA CAC HAM CHUC NANG-----+
@@ -240,6 +251,13 @@ void CapNhatSinhVien(Sinhvien a[MAX], int n, char MSSVCanCapNhat[]) {
     }
 }
 // 8. HAM SAP XEP DANH SACH THEO 2 TIEU CHI: TANG/GIAM THEO DIEM VA THEO TEN TU A DEN Z
+// + Ham hoan doi
+void Swap(Sinhvien *a, Sinhvien *b)
+{
+	Sinhvien temp = *a;
+	*a = *b;
+	*b = temp;
+}
 // a. Su dung thuat toan sap xep Interchange Sort cho Ham sap xep Diem trung binh TANG DAN
 void SapXepDTBTangDan(Sinhvien a[MAX],int n)
 {
@@ -247,11 +265,9 @@ void SapXepDTBTangDan(Sinhvien a[MAX],int n)
 	{
 		for(int j = i+1; j < n ;j++)
 		{
-			if ( a[i].diemtrungbinh > a[j].diemtrungbinh )
+			if ( a[i].diemtrungbinh < a[j].diemtrungbinh )
 			{
-				Sinhvien temp = a[i];
-				a[i] = a[j];
-				a[j] = temp;
+               Swap(&a[i],&a[j]);
 			}
 		}
 	}
@@ -265,13 +281,47 @@ void SapXepDTBGiamDan(Sinhvien a[MAX],int n)
 		{
 			if(a[j].diemtrungbinh > a[j-1].diemtrungbinh)
 			{
-				Sinhvien temp = a[j];
-				a[j] = a[j-1];
-				a[j-1] = temp;
+                Swap(&a[j],&a[j-1]);
 			}
 		}
 	}
 }
+// c. Su dung thuat toan Insertion Sort cho sap xep So dien thoai TANG DAN tu A den Z
+void SapXepSDTTangDan(Sinhvien a[], int n)
+{
+	int pos;
+	for (int i = 0; i<n ; i++)
+	{
+		pos = i;
+		while (pos > 0 && strcmp(a[pos].sdt,a[pos-1].sdt) < 0)    //a[pos] < a[pos-1]
+		{
+            Swap(&a[pos], &a[pos-1]);
+            pos--;
+		}
+	}
+}
+// d. Su dung thuat toan Selection Sort cho sap xep Ho Ten TANG DAN tu A den Z
+void SapXepHoTenTangDan(Sinhvien a[],int n)
+{
+	int min;
+	for (int i=0; i<n-1; i++)
+	{
+		min = i;
+		for (int j=i+1; j<n; j++)
+		{
+			if( strcmp(a[j].hoten, a[min].hoten) < 0 )         // a[j] < a[min]
+			{
+				min = j;	
+			}
+        }
+	    
+		if ( min!= i )
+	    {
+		Swap(&a[min],&a[i]);
+        }  
+	}
+}
+
 //. GHI DU LIEU RA TEP
 void GhiFile(Sinhvien a[MAX],int n)
 {
@@ -324,8 +374,15 @@ void DocFile(Sinhvien a[MAX])
 // MAIN
 int main() {
     int n;
+    char username[30];
     printf("\n+----------- HE CO SO DU LIEU QUAN LY SINH VIEN -----------+\n");
-    printf("Nhap so sinh vien [Toi da 100]: ");
+    
+    printf("Nhap ten cua ban: ");
+    
+    nhapChuoi(username, sizeof(username));
+    printf("Chao mung %s !\n", username);
+    
+    printf("Nhap so sinh vien [Toi da 200]: ");
     scanf("%d", &n);
     getchar();
     Sinhvien a[MAX];
@@ -422,26 +479,41 @@ int main() {
 		{
 			char choice;                           // Chon sap xep theo DTB tang dan hay giam dan
 			printf("\n---Chon phuong thuc sap xep---\n");
-			printf("[U].Sap xep theo diem trung binh tang dan\n");
-			printf("[D].Sap xep theo diem trung binh giam dan\n");
-			printf("[U-D]:");
+			printf("[a].Sap xep theo diem trung binh tang dan\n");
+			printf("[b].Sap xep theo diem trung binh giam dan\n");
+			printf("[c].Sap xep theo Ho va Ten tang dan\n");
+			printf("[d].Sap xep theo So dien thoai tang dan\n");
+			printf("[a-d]:");
 			scanf("%c",&choice);
 			switch(choice)
 			{
-				case 'U':                         // Sap xep theo diem trung binh tang dan
+				case 'a':                         // Sap xep theo diem trung binh tang dan
 					{
 						SapXepDTBTangDan(a, n);
 						printf("\n------------------Danh sach sinh vien sap xep theo diem trung binh tang dan-----------------------\n");
 						xuat(a,n);
 					}
 					break;
-				case 'D':                         // Sap xep theo diem trung binh giam dan
+				case 'b':                         // Sap xep theo diem trung binh giam dan
 					{
 						printf("\n------------------Danh sach sinh vien sap xep theo diem trung binh giam dan-----------------------\n");
 						SapXepDTBGiamDan(a,n);
 						xuat(a,n);
 					}
 					break;
+			    case 'c':                          // Sap xep theo Ho va ten tang dan
+					{
+						printf("\n---------------------Danh sach sinh vien sap xep theo Ho va ten tang dan----------------------------\n");
+						SapXepHoTenTangDan(a,n);
+						xuat(a,n);
+					}break;
+				case 'd':                          // Sap xep theo So dien thoai tang dan
+					{
+						printf("\n--------------------Danh sach sinh vien sap xep theo So dien thoai tang dan--------------------------\n");
+						SapXepSDTTangDan(a,n);
+						xuat(a,n);
+					}break;									
+					
 				default:
 					printf("Lua chon khong hop le !\n");
 		    }		
