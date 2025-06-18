@@ -626,7 +626,7 @@ int main() {
 					        	xuat(a,n);break;
 					        default: printf("Lua chon khong hop le!");
 					    }
-					}
+					}break;
 				case 'd':                            // Sap xep theo Ma so sinh vien
 					{
 						UpDown(&upordown);         
